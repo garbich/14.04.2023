@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+ 
+// Task 1
+bool isLeapYear(int year) {
+    if (year % 4 != 0) {
+        return false;
+    }
+    else if (year % 100 != 0) {
+        return true;
+    }
+    else if (year % 400 != 0) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+int getDayDifference(int day1, int month1, int year1, int day2, int month2, int year2) {
+    int daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    if (isLeapYear(year1)) {
+        daysInMonth[1] = 29;
+    }
+
+    int totalDays1 = year1 * 365 + day1;
+    for (int i = 0; i < month1 - 1; i++) {
+        totalDays1 += daysInMonth[i];
+    }
+    totalDays1 += (year1 / 4) - (year1 / 100) + (year1 / 400);
+
+    if (isLeapYear(year2)) {
+        daysInMonth[1] = 29;
+    }
+    else {
+        daysInMonth[1] = 28;
+    }
+
+    int totalDays2 = year2 * 365 + day2;
+    for (int i = 0; i < month2 - 1; i++) {
+        totalDays2 += daysInMonth[i];
+    }
+    totalDays2 += (year2 / 4) - (year2 / 100) + (year2 / 400);
+
+    return totalDays2 - totalDays1;
+}
+
+int main() {
+    int day1, month1, year1, day2, month2, year2;
+    cout << "enter first date (day mounth year): ";
+    cin >> day1 >> month1 >> year1;
+    cout << "enter second date (day mounth year): ";
+    cin >> day2 >> month2 >> year2;
+
+    int result = getDayDifference(day1, month1, year1, day2, month2, year2);
+    cout << "difference in days: " << result << endl;
+}
